@@ -1,0 +1,9 @@
+data/*
+figures/*
+*.DS_Store
+code/python/__pycache__
+code/python/logs
+
+# Processing files from github.com/Watchful1/PushshiftDumps
+code/python/single_file.py
+code/python/filter_file.py
