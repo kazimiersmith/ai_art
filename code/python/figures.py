@@ -5,10 +5,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
+# Start graphs after all AI art subreddits were created, and exclude the dates of the
+# Reddit API change protest. The latter dates have zero posts for some subreddits
 panel = pd.read_pickle(data / 'daily_data.pkl')
+panel = panel[panel['date'] >= all_subreddits_exist].reset_index(drop = True)
+panel['api_protest'] = panel['date'].apply(lambda x: x in api_protest_dates)
+panel = panel[panel['api_protest'] == False].reset_index(drop = True)
+
 panel_both = pd.read_pickle(data / 'daily_data_both.pkl')
-panel = panel[panel['date'] >= start_date].reset_index(drop = True)
-panel_both = panel_both[panel_both['date'] >= start_date].reset_index(drop = True)
+panel_both = panel_both[panel_both['date'] >= all_subreddits_exist].reset_index(drop = True)
+panel_both['api_protest'] = panel_both['date'].apply(lambda x: x in api_protest_dates)
+panel_both = panel_both[panel_both['api_protest'] == False].reset_index(drop = True)
 
 # Graph daily submissions to r/Art and AI art subreddits
 panel.plot(x = 'date', y = ['posts_organic', 'posts_ai'])
@@ -32,10 +39,7 @@ plt.savefig(figures / 'unique_authors.png')
 plt.close()
 
 # Plot mean post score, excluding outliers from the API change protest
-panel['api_protest'] = panel['date'].apply(lambda x: x in api_protest_dates)
-panel[panel['api_protest'] == False].plot(x = 'date',
-                                          y = ['post_score_organic',
-                                               'post_score_ai'])
+panel.plot(x = 'date',y = ['post_score_organic', 'post_score_ai'])
 plt.xlabel('')
 plt.ylabel('Mean post score')
 plt.savefig(figures / 'mean_score.png')
@@ -97,18 +101,16 @@ plt.savefig(figures / 'unique_commenters_overlapping_commenters.png')
 plt.close()
 
 # Posts per author among authors who ever post on both
-panel_both[panel_both['date'] >= all_subreddits_exist].plot(x = 'date',
-                                                            y = ['posts_per_author_organic',
-                                                                 'posts_per_author_ai'])
+panel_both.plot(x = 'date', y = ['posts_per_author_organic', 'posts_per_author_ai'])
 plt.xlabel('')
 plt.ylabel('Posts per author')
 plt.savefig(figures / 'posts_per_author_overlapping_authors.png')
 plt.close()
 
 # Comments per author among commenters who ever comment on both
-panel_both[panel_both['date'] >= all_subreddits_exist].plot(x = 'date',
-                                                            y = ['comments_per_author_organic',
-                                                                 'comments_per_author_ai'])
+panel_both.plot(x = 'date',
+                y = ['comments_per_author_organic',
+                     'comments_per_author_ai'])
 plt.xlabel('')
 plt.ylabel('Comments per author')
 plt.savefig(figures / 'comments_per_author_overlapping_commenters.png')
@@ -124,56 +126,56 @@ plt.savefig(figures / 'comments_per_post_overlapping_commenters.png')
 plt.close()
 
 # Scatter unique authors on AI art subreddits vs. r/Art (each point is a day)
-panel[panel['date'] >= all_subreddits_exist].plot.scatter(x = 'authors_organic',
-                                                          y = 'authors_ai')
+panel.plot.scatter(x = 'authors_organic',
+                   y = 'authors_ai')
 plt.xlabel('Unique authors to r/Art')
 plt.ylabel('Unique authors to AI art subreddits')
 plt.savefig(figures / 'unique_authors_scatter.png')
 plt.close()
 
 # Scatter posts on AI art subreddits vs. r/Art (each point is a day)
-panel[panel['date'] >= all_subreddits_exist].plot.scatter(x = 'posts_organic',
-                                                          y = 'posts_ai')
+panel.plot.scatter(x = 'posts_organic',
+                   y = 'posts_ai')
 plt.xlabel('Posts on r/Art')
 plt.ylabel('Posts on AI art subreddits')
 plt.savefig(figures / 'submissions_scatter.png')
 plt.close()
 
 # Scatter posts per author on AI art subreddits vs. r/Art (each point is a day)
-panel[panel['date'] >= all_subreddits_exist].plot.scatter(x = 'posts_per_author_organic',
-                                                          y = 'posts_per_author_ai')
+panel.plot.scatter(x = 'posts_per_author_organic',
+                   y = 'posts_per_author_ai')
 plt.xlabel('Submissions per author to r/Art')
 plt.ylabel('Submissions per author to AI art subreddits')
 plt.savefig(figures / 'subs_per_author_scatter.png')
 plt.close()
 
 # Scatter comment authors on AI art subreddits vs. r/Art
-panel[panel['date'] >= all_subreddits_exist].plot.scatter(x = 'commenters_organic',
-                                                          y = 'commenters_ai')
+panel.plot.scatter(x = 'commenters_organic',
+                   y = 'commenters_ai')
 plt.xlabel('Unique commenters to r/Art')
 plt.ylabel('Unique commenters to AI art subreddits')
 plt.savefig(figures / 'unique_commenters_scatter.png')
 plt.close()
 
 # Scatter comments on AI art subreddits vs. r/Art
-panel[panel['date'] >= all_subreddits_exist].plot.scatter(x = 'comments_organic',
-                                                          y = 'comments_ai')
+panel.plot.scatter(x = 'comments_organic',
+                   y = 'comments_ai')
 plt.xlabel('Comments on r/Art')
 plt.ylabel('Comments on AI art subreddits')
 plt.savefig(figures / 'comments_scatter.png')
 plt.close()
 
 # Scatter comments per author on AI art subreddits vs. r/Art
-panel[panel['date'] >= all_subreddits_exist].plot.scatter(x = 'comments_per_author_organic',
-                                                          y = 'comments_per_author_ai')
+panel.plot.scatter(x = 'comments_per_author_organic',
+                   y = 'comments_per_author_ai')
 plt.xlabel('Comments per author to r/Art')
 plt.ylabel('Comments per author to AI art subreddits')
 plt.savefig(figures / 'comments_per_author_scatter.png')
 plt.close()
 
 # Scatter comments per post on AI art subreddits vs. r/Art
-panel[panel['date'] >= all_subreddits_exist].plot.scatter(x = 'comments_per_post_organic',
-                                                          y = 'comments_per_post_ai')
+panel.plot.scatter(x = 'comments_per_post_organic',
+                   y = 'comments_per_post_ai')
 plt.xlabel('Comments per post on r/Art')
 plt.ylabel('Comments per post on AI art subreddits')
 plt.savefig(figures / 'comments_per_post_scatter.png')
