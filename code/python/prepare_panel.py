@@ -48,6 +48,8 @@ daily_data['posts_per_author_organic'] = daily_data['posts_organic'] / daily_dat
 daily_data['comments_per_author_organic'] = daily_data['comments_organic'] / daily_data['commenters_organic']
 daily_data['posts_per_author_ai'] = daily_data['posts_ai'] / daily_data['authors_ai']
 daily_data['comments_per_author_ai'] = daily_data['comments_ai'] / daily_data['commenters_ai']
+daily_data['comments_per_post_organic'] = daily_data['comments_organic'] / daily_data['posts_organic']
+daily_data['comments_per_post_ai'] = daily_data['comments_ai'] / daily_data['posts_ai']
 daily_data.to_pickle(data / 'daily_data.pkl')
 
 # Panel with only authors/commenters in both AI subreddits and r/Art
@@ -56,4 +58,6 @@ daily_data_both['posts_per_author_organic'] = daily_data_both['posts_organic'] /
 daily_data_both['comments_per_author_organic'] = daily_data_both['comments_organic'] / daily_data_both['commenters_organic']
 daily_data_both['posts_per_author_ai'] = daily_data_both['posts_ai'] / daily_data_both['authors_ai']
 daily_data_both['comments_per_author_ai'] = daily_data_both['comments_ai'] / daily_data_both['commenters_ai']
+daily_data_both['comments_per_post_organic'] = daily_data_both['comments_organic'] / daily_data_both['posts_organic']
+daily_data_both['comments_per_post_ai'] = daily_data_both['comments_ai'] / daily_data_both['posts_ai']
 daily_data_both.to_pickle(data / 'daily_data_both.pkl')
