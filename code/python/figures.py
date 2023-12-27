@@ -10,12 +10,10 @@ from datetime import datetime
 panel = pd.read_pickle(data / 'daily_data.pkl')
 panel = panel[panel['date'] >= all_subreddits_exist].reset_index(drop = True)
 panel['api_protest'] = panel['date'].apply(lambda x: x in api_protest_dates)
-panel = panel[panel['api_protest'] == False].reset_index(drop = True)
 
 panel_both = pd.read_pickle(data / 'daily_data_both.pkl')
 panel_both = panel_both[panel_both['date'] >= all_subreddits_exist].reset_index(drop = True)
 panel_both['api_protest'] = panel_both['date'].apply(lambda x: x in api_protest_dates)
-panel_both = panel_both[panel_both['api_protest'] == False].reset_index(drop = True)
 
 # Graph daily submissions to r/Art and AI art subreddits
 panel.plot(x = 'date', y = ['posts_organic', 'posts_ai'])
