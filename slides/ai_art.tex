@@ -1,0 +1,90 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Do not alter this block of commands.  If you're proficient at LaTeX, you may include additional packages, create macros, etc. immediately below this block of commands, but make sure to NOT alter the header, margin, and comment settings here. 
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsthm, amssymb, amsfonts, fancyhdr, color, graphicx, setspace, mathtools, hyperref, array, pgffor, tikz, caption}
+\usetikzlibrary{calc}
+
+\usetheme{NYU}
+
+\graphicspath{{../fig/}}
+
+\captionsetup{labelformat=empty}
+\captionsetup{font = small}
+
+\newcommand\Wider[2][3em]{%
+	\makebox[\linewidth][c]{%
+		\begin{minipage}{\dimexpr\textwidth+#1\relax}
+			\raggedright#2
+		\end{minipage}%
+	}%
+}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+\DeclarePairedDelimiter\inprod{\langle}{\rangle}%
+\DeclareMathOperator*{\argmax}{argmax}
+
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the 
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+ 
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+
+\def\pr{\mathbf{p}}
+\def\E{\mathbb{E}}
+\def\V{\mathbb{V}}
+\def\ind{\mathbbm{1}}
+\def\h{\mathbf{h}}
+\def\co{\text{co}}
+\def\defaultscalees{0.04}
+\def\defaultscalefig{0.5}
+\makeatother
+
+\title{AI art}
+\author{Kazimier Smith}
+\date{\today}
+
+\begin{document}
+
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}{\textopenbullet}
+\setbeamertemplate{itemize subsubitem}[square]
+\setbeamertemplate{enumerate item}[default]
+\addtobeamertemplate{footline}{\vspace{-0.3cm}}{\vspace{0.5cm}}
+\beamertemplatenavigationsymbolsempty
+
+\setbeamertemplate{footline}
+	
+\begin{frame}[noframenumbering]
+\titlepage
+\end{frame}
+
+\setbeamertemplate{footline}[frame number]
+
+\begin{frame}{}
+	\centering
+	\resizebox*{!}{5cm}{
+		\input{../tab/reg_organic_ai_posts}
+	}
+\end{frame}
+
+\begin{frame}{}
+	\centering
+	\resizebox*{!}{4cm}{
+		\input{../tab/reg_organic_ai_comments}
+	}
+\end{frame}
+
+\begin{frame}{}
+	\centering
+	\resizebox*{!}{4cm}{
+		\input{../tab/reg_organic_ai_comments_overlapping_commenters}
+	}
+\end{frame}
+
+\end{document}

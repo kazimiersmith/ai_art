@@ -3,6 +3,7 @@ from set_globals import *
 from pathlib import Path
 import pandas as pd
 from datetime import datetime
+import numpy as np
 
 # Create daily panel
 def create_daily_panel(posts, comments):
@@ -50,6 +51,8 @@ daily_data['posts_per_author_ai'] = daily_data['posts_ai'] / daily_data['authors
 daily_data['comments_per_author_ai'] = daily_data['comments_ai'] / daily_data['commenters_ai']
 daily_data['comments_per_post_organic'] = daily_data['comments_organic'] / daily_data['posts_organic']
 daily_data['comments_per_post_ai'] = daily_data['comments_ai'] / daily_data['posts_ai']
+daily_data['day_of_week'] = daily_data['date'].dt.weekday
+daily_data = daily_data.replace([np.inf, -np.inf], np.nan)
 daily_data.to_pickle(data / 'daily_data.pkl')
 
 # Panel with only authors/commenters in both AI subreddits and r/Art
@@ -60,4 +63,6 @@ daily_data_both['posts_per_author_ai'] = daily_data_both['posts_ai'] / daily_dat
 daily_data_both['comments_per_author_ai'] = daily_data_both['comments_ai'] / daily_data_both['commenters_ai']
 daily_data_both['comments_per_post_organic'] = daily_data_both['comments_organic'] / daily_data_both['posts_organic']
 daily_data_both['comments_per_post_ai'] = daily_data_both['comments_ai'] / daily_data_both['posts_ai']
+daily_data_both['day_of_week'] = daily_data_both['date'].dt.weekday
+daily_data_both = daily_data_both.replace([np.inf, -np.inf], np.nan)
 daily_data_both.to_pickle(data / 'daily_data_both.pkl')

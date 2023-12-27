@@ -1,6 +1,15 @@
 data/*
 figures/*
 *.DS_Store
+*.log
+*.aux
+*.nav
+*.out
+*.snm
+*.pdf
+*.toc
+*.sty
+tab/*
 code/python/__pycache__
 code/python/logs
 
