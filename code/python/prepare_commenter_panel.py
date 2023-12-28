@@ -74,4 +74,12 @@ commenter_panel['cum_comments_organic'] = commenter_panel.groupby('author')['com
 commenter_panel['has_commented_ai'] = commenter_panel['cum_comments_ai'] > 0
 commenter_panel['has_commented_organic'] = commenter_panel['cum_comments_organic'] > 0
 
+commenter_panel['diff_comments'] = commenter_panel['comments_organic'] - commenter_panel['comments_ai']
+
+# Sum all future comments
+commenter_panel['future_comments_ai'] = commenter_panel.groupby('author')['comments_ai'].transform(lambda x: x[::-1].cumsum()[::-1])
+commenter_panel['future_comments_organic'] = commenter_panel.groupby('author')['comments_organic'].transform(lambda x: x[::-1].cumsum()[::-1])
+commenter_panel['has_future_comments_ai'] = commenter_panel['future_comments_ai'] > 0
+commenter_panel['has_future_comments_organic'] = commenter_panel['future_comments_organic'] > 0
+
 commenter_panel.to_pickle(data / 'commenter_panel.pkl')

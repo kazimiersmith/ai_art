@@ -196,3 +196,16 @@ plt.ylabel('Average comments per commenter')
 plt.savefig(figures / 'comments_per_commenter.png')
 plt.close()
 
+commenter_panel.groupby('date').mean(numeric_only = True).plot(y = 'diff_comments')
+plt.xlabel('')
+plt.ylabel('Average difference in comments')
+plt.savefig(figures / 'comments_diff.png')
+plt.close()
+
+commenter_panel.groupby('date').sum().plot(y = ['has_future_comments_organic',
+                                                'has_future_comments_ai'])
+plt.xlabel('')
+plt.ylabel('Number of commenters')
+plt.savefig(figures / 'commenters_future_comments.png')
+plt.close()
+
