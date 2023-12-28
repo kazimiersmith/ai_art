@@ -209,3 +209,10 @@ plt.ylabel('Number of commenters')
 plt.savefig(figures / 'commenters_future_comments.png')
 plt.close()
 
+commenter_panel.groupby('date').mean(numeric_only = True).plot(y = ['future_comments_organic',
+                                                                    'future_comments_ai'])
+plt.xlabel('')
+plt.ylabel('Average future comments')
+plt.savefig(figures / 'future_comments.png')
+plt.close()
+
