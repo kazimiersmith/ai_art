@@ -8,12 +8,14 @@ from datetime import datetime
 # Start graphs after all AI art subreddits were created, and exclude the dates of the
 # Reddit API change protest. The latter dates have zero posts for some subreddits
 panel = pd.read_pickle(data / 'daily_data.pkl')
-panel = panel[panel['date'] >= all_subreddits_exist].reset_index(drop = True)
+panel = panel[panel['date'] >= start_date].reset_index(drop = True)
 panel['api_protest'] = panel['date'].apply(lambda x: x in api_protest_dates)
 
 panel_both = pd.read_pickle(data / 'daily_data_both.pkl')
-panel_both = panel_both[panel_both['date'] >= all_subreddits_exist].reset_index(drop = True)
+panel_both = panel_both[panel_both['date'] >= start_date].reset_index(drop = True)
 panel_both['api_protest'] = panel_both['date'].apply(lambda x: x in api_protest_dates)
+
+commenter_panel = pd.read_pickle(data / 'commenter_panel.pkl')
 
 # Graph daily submissions to r/Art and AI art subreddits
 panel.plot(x = 'date', y = ['posts_organic', 'posts_ai'])
@@ -178,3 +180,19 @@ plt.xlabel('Comments per post on r/Art')
 plt.ylabel('Comments per post on AI art subreddits')
 plt.savefig(figures / 'comments_per_post_scatter.png')
 plt.close()
+
+# Plot number of commenters who have ever commented on AI and organic subreddits
+commenter_panel.groupby('date').sum().plot(y = ['has_commented_organic',
+                                                 'has_commented_ai'])
+plt.xlabel('')
+plt.ylabel('Number of commenters')
+plt.savefig(figures / 'commenters_ever_commented.png')
+plt.close()
+
+commenter_panel.groupby('date').mean(numeric_only = True).plot(y = ['comments_organic',
+                                                                      'comments_ai'])
+plt.xlabel('')
+plt.ylabel('Average comments per commenter')
+plt.savefig(figures / 'comments_per_commenter.png')
+plt.close()
+

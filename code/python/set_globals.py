@@ -5,7 +5,7 @@ root = Path('~/Dropbox/ai_art').expanduser()
 data = root / 'data'
 figures = root / 'figures'
 
-start_date = datetime(2022, 1, 1)
+start_date = datetime(2021, 1, 1)
 
 api_protest_dates = [datetime(2023, 6, 12),
                      datetime(2023, 6, 13),
