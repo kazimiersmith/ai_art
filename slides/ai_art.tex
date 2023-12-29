@@ -7,7 +7,7 @@
 
 \usetheme{NYU}
 
-\graphicspath{{../fig/}}
+\graphicspath{{../figures/}}
 
 \captionsetup{labelformat=empty}
 \captionsetup{font = small}
@@ -42,7 +42,7 @@
 \def\h{\mathbf{h}}
 \def\co{\text{co}}
 \def\defaultscalees{0.04}
-\def\defaultscalefig{0.5}
+\def\defaultscalefig{0.4}
 \makeatother
 
 \title{AI art}
@@ -66,25 +66,103 @@
 
 \setbeamertemplate{footline}[frame number]
 
-\begin{frame}{}
-	\centering
-	\resizebox*{!}{5cm}{
-		\input{../tab/reg_organic_ai_posts}
-	}
+\begin{frame}{Data}
+	\begin{itemize}
+		\item Cannot reliably classify AI-generated art
+		\item Posts and comments from r/Art (does not allow AI-generated art)
+		\item Posts and comments from large AI art subreddits (assume all art is AI-generated)
+		\begin{itemize}
+			\item r/aiArt, r/midjourney, r/dalle2, r/StableDiffusion
+		\end{itemize}
+	\end{itemize}
 \end{frame}
 
-\begin{frame}{}
+\begin{frame}{Posts over time}
+	\begin{figure}
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\includegraphics[scale=\defaultscalefig]{posts}
+		\end{minipage}\hfill
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\begin{itemize}
+				\item Initial spike in AI art due to creation of subreddits
+				\item No obvious impact of AI art on organic art
+				\item Some subreddits (including r/Art) shut down for a few days in June 2023 to protest Reddit API changes
+				\item Reduction in posting after protest
+				\item r/aiArt, r/midjourney did not participate in the protest
+			\end{itemize}
+		\end{minipage}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Comments over time}
+	\begin{figure}
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\includegraphics[scale=\defaultscalefig]{comments}
+		\end{minipage}\hfill
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\begin{itemize}
+				\item No obvious effect of AI art on organic art
+			\end{itemize}
+		\end{minipage}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Productivity over time}
+	\begin{figure}
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\includegraphics[scale=\defaultscalefig]{posts_per_author}
+		\end{minipage}\hfill
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\begin{itemize}
+				\item Productivity did not recover after API protest
+			\end{itemize}
+		\end{minipage}
+	\end{figure}
+\end{frame}
+
+\begin{frame}{Authors over time}
+	\begin{figure}
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\includegraphics[scale=\defaultscalefig]{unique_authors}
+		\end{minipage}\hfill
+		\begin{minipage}{0.45\textwidth}
+			\centering
+			\begin{itemize}
+				\item Overall decline in number of organic art posters
+				\item Not obviously related to AI
+			\end{itemize}
+		\end{minipage}
+	\end{figure}
+
+\end{frame}
+
+\begin{frame}{Relationship between AI art posts and organic art posts}
+	\centering
+	\resizebox*{!}{4cm}{
+		\input{../tab/reg_organic_ai_posts}
+	}
+	\begin{itemize}
+		\item Regress number of posts on r/Art (organic) on number of posts on AI art subreddits
+		\item Observation is a day
+		\item Positive correlation due to overall trends in Reddit traffic?
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Relationship between AI art comments and organic art comments}
 	\centering
 	\resizebox*{!}{4cm}{
 		\input{../tab/reg_organic_ai_comments}
 	}
+	\begin{itemize}
+		\item More comments on AI art subreddits $\implies$ fewer comments on r/Art
+		\item Small effect relative to average comments
+	\end{itemize}
 \end{frame}
-
-\begin{frame}{}
-	\centering
-	\resizebox*{!}{4cm}{
-		\input{../tab/reg_organic_ai_comments_overlapping_commenters}
-	}
-\end{frame}
-
 \end{document}

@@ -37,7 +37,22 @@ out = stargazer(reg1, reg2, reg3, reg4,
 				column.sep.width = '1pt',
 				keep.stat = c('n', 'rsq'),
 				report = 'vc*',
-				omit = c('factor*')
+				omit = c('factor*'),
+				add.lines = list(
+								 c('Mean dep. var.', round(mean(na.omit(panel$posts_organic)), digits = 4),
+								   round(mean(na.omit(panel$posts_per_author_organic)), digits = 4),
+								   round(mean(na.omit(panel$authors_organic)), digits = 4),
+								   round(mean(na.omit(panel$post_score_organic)), digits = 4)),
+								 c('Day of week FE', 'Yes', 'Yes', 'Yes', 'Yes')
+								 ),
+				dep.var.labels = c('Posts (org.)',
+								   'Posts per author (org.)',
+								   'Authors (org.)',
+								   'Post score (org.)'),
+				covariate.labels = c('Posts (AI)',
+									 'Posts per author (AI)',
+									 'Authors (AI)',
+									 'Post score (AI)')
 )
 
 out = sub('\\caption{}', '', out, fixed = TRUE)
@@ -51,7 +66,22 @@ out = stargazer(reg5, reg6, reg7, reg8,
 				column.sep.width = '1pt',
 				keep.stat = c('n', 'rsq'),
 				report = 'vc*',
-				omit = c('factor*')
+				omit = c('factor*'),
+				add.lines = list(
+								 c('Mean dep. var.', round(mean(na.omit(panel$comments_organic)), digits = 4),
+								   round(mean(na.omit(panel$comments_per_author_organic)), digits = 4),
+								   round(mean(na.omit(panel$commenters_organic)), digits = 4),
+								   round(mean(na.omit(panel$comments_per_post_organic)), digits = 4)),
+								 c('Day of week FE', 'Yes', 'Yes', 'Yes', 'Yes')
+								 ),
+				dep.var.labels = c('Comments (org.)',
+								   'Comments per author (org.)',
+								   'Commenters (org.)',
+								   'Comments per post (org.)'),
+				covariate.labels = c('Comments (AI)',
+									 'Comments per author (AI)',
+									 'Commenters (AI)',
+									 'Comments per post (AI)')
 )
 
 out = sub('\\caption{}', '', out, fixed = TRUE)

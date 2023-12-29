@@ -12,3 +12,5 @@ api_protest_dates = [datetime(2023, 6, 12),
                      datetime(2023, 6, 14)]
 
 all_subreddits_exist = datetime(2022, 7, 23)
+
+default_dpi = 300
