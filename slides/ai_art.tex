@@ -45,7 +45,7 @@
 \def\defaultscalefig{0.4}
 \makeatother
 
-\title{AI art}
+\title{Does Generative AI Crowd Out Human Artists? Evidence from Reddit}
 \author{Kazimier Smith}
 \date{\today}
 
@@ -66,15 +66,51 @@
 
 \setbeamertemplate{footline}[frame number]
 
+\begin{frame}{Introduction}
+Broad question: does generative AI replace or augment human workers?
+	\begin{itemize}
+		\item Probably both
+		\item Depends on industry
+		\item Creative industries are especially susceptible,
+			e.g. Hollywood writers' strike
+		\item Difficult to study because it is difficult to identify AI-generated content
+	\end{itemize}
+\end{frame}
+
 \begin{frame}{Data}
 	\begin{itemize}
+		\item Data from Reddit
+			\begin{itemize}
+				\item Large online platform
+				\item Split into sub-platforms called ``subreddits'' dedicated to specific topics
+				\item Users submit content (e.g. their artwork),
+					other users can vote on it and discuss it
+			\end{itemize}
 		\item Cannot reliably classify AI-generated art
-		\item Posts and comments from r/Art (does not allow AI-generated art)
-		\item Posts and comments from large AI art subreddits (assume all art is AI-generated)
+		\item Collect all posts and comments from r/Art subreddit
+			(does not allow AI-generated art; ``organic art'')
+		\item Collect all posts and comments from large AI art subreddits
+			(assume all art is AI-generated)
 		\begin{itemize}
 			\item r/aiArt, r/midjourney, r/dalle2, r/StableDiffusion
 		\end{itemize}
 	\end{itemize}
+\end{frame}
+
+\begin{frame}{Data}
+Little overlap in post authors:
+	\begin{itemize}
+		\item XXX unique authors on AI art subreddits
+		\item XXX unique authors on organic art subreddits
+		\item XXX authors ever posted on both (xx\%)
+	\end{itemize}
+Slightly more overlap in audience
+	\begin{itemize}
+		\item XXX unique commenters on AI art subreddits
+		\item XXX unique commenters on organic art subreddits
+		\item XXX overlapping commenters (xx\%)
+	\end{itemize}
+Not clear that AI and organic art are substitutes for the audience
 \end{frame}
 
 \begin{frame}{Posts over time}
@@ -90,6 +126,7 @@
 				\item No obvious impact of AI art on organic art
 				\item Some subreddits (including r/Art) shut down for a few days in June 2023 to protest Reddit API changes
 				\item Reduction in posting after protest
+					(and persistent effect of ``shocks'' more generally)
 				\item r/aiArt, r/midjourney did not participate in the protest
 			\end{itemize}
 		\end{minipage}
@@ -106,6 +143,8 @@
 			\centering
 			\begin{itemize}
 				\item No obvious effect of AI art on organic art
+				\item Fewer commenters on AI art
+					$\implies$ each commenter writes more comments
 			\end{itemize}
 		\end{minipage}
 	\end{figure}
@@ -137,17 +176,25 @@
 			\begin{itemize}
 				\item Overall decline in number of organic art posters
 				\item Not obviously related to AI
+				\item Denominator of productivity measure is shrinking,
+					so reduction in productivity is driven by fewer posts
 			\end{itemize}
 		\end{minipage}
 	\end{figure}
+\end{frame}
 
+\begin{frame}{Did organic artists switch to/adopt AI after protests?}
+	Among authors that ever post on both,
+	expect to see increased productivity on AI subreddits.
+	Don't really see that.
+	Also need to plot number of posters who ever multihomed over time
 \end{frame}
 
 \begin{frame}{Relationship between AI art posts and organic art posts}
 	\centering
-	\resizebox*{!}{4cm}{
-		\input{../tab/reg_organic_ai_posts}
-	}
+	%\resizebox*{!}{4cm}{
+	%	\input{../tab/reg_organic_ai_posts}
+	%}
 	\begin{itemize}
 		\item Regress number of posts on r/Art (organic) on number of posts on AI art subreddits
 		\item Observation is a day
@@ -157,9 +204,9 @@
 
 \begin{frame}{Relationship between AI art comments and organic art comments}
 	\centering
-	\resizebox*{!}{4cm}{
-		\input{../tab/reg_organic_ai_comments}
-	}
+	%\resizebox*{!}{4cm}{
+	%	\input{../tab/reg_organic_ai_comments}
+	%}
 	\begin{itemize}
 		\item More comments on AI art subreddits $\implies$ fewer comments on r/Art
 		\item Small effect relative to average comments
