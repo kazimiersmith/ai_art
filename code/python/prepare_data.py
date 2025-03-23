@@ -15,8 +15,8 @@ subreddits = ai_subreddits + organic_subreddits
 # ----- Posts -----
 posts_list = []
 # Specific subreddit files (2022 and earlier)
-for sub_file in data.glob('*_submissions.zst'):
-    for line, file_bytes_processed in read_lines_zst(data / sub_file):
+for sub_file in raw.glob('*_submissions.zst'):
+    for line, file_bytes_processed in read_lines_zst(raw / sub_file):
         obj = json.loads(line)
         created = datetime.fromtimestamp(int(obj['created_utc']))
         sub = {'subreddit': obj['subreddit'],
@@ -29,8 +29,8 @@ for sub_file in data.glob('*_submissions.zst'):
         posts_list.append(sub)
 
 # 2023 submissions (preprocessed to include only the subreddits I'm using)
-for sub_file in data.glob('RS_2023-*'):
-    for line, file_bytes_processed in read_lines_zst(data / sub_file):
+for sub_file in raw.glob('RS_2023-*'):
+    for line, file_bytes_processed in read_lines_zst(raw / sub_file):
         obj = json.loads(line)
         created = datetime.fromtimestamp(int(obj['created_utc']))
         sub = {'subreddit': obj['subreddit'],
@@ -68,8 +68,8 @@ print(f'Number of authors in both: {len(authors_both)}')
 
 # ----- Comments -----
 comments_list = []
-for comment_file in data.glob('*_comments.zst'):
-    for line, file_bytes_processed in read_lines_zst(data / comment_file):
+for comment_file in raw.glob('*_comments.zst'):
+    for line, file_bytes_processed in read_lines_zst(raw / comment_file):
         obj = json.loads(line)
         submission_id = obj['link_id'].split('_')[1]
         created = datetime.fromtimestamp(int(obj['created_utc']))
@@ -82,8 +82,8 @@ for comment_file in data.glob('*_comments.zst'):
         comments_list.append(comment)
 
 # 2023 comments
-for comment_file in data.glob('RC_2023-*'):
-    for line, file_bytes_processed in read_lines_zst(data / comment_file):
+for comment_file in raw.glob('RC_2023-*'):
+    for line, file_bytes_processed in read_lines_zst(raw / comment_file):
         obj = json.loads(line)
         submission_id = obj['link_id'].split('_')[1]
         created = datetime.fromtimestamp(int(obj['created_utc']))
