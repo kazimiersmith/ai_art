@@ -8,7 +8,7 @@ import numpy as np
 # Create author-day panel;
 # random sample for now so it runs faster
 posts_all = pd.read_pickle(data / 'posts.pkl')
-posts = posts_all[posts_all['author'] != '[deleted]'].sample(frac = 0.01).reset_index(drop = True)
+posts = posts_all[posts_all['author'] != '[deleted]'].reset_index(drop = True)
 
 author_panel = posts.groupby(['author', 'ai_subreddit']).resample('W', on = 'created').agg({
     'id': 'count', # Assuming posts aren't duplicated
