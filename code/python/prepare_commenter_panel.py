@@ -12,6 +12,9 @@ comments_all = pd.read_pickle(data / 'comments.pkl')
 comments_both = comments_all[comments_all['commenter_both'] == True].reset_index(drop = True)
 comments_both = comments_both[comments_both['author'] != '[deleted]'].reset_index(drop = True)
 
+# TODO remove
+comments_both = comments_both.sample(frac = 0.01).reset_index(drop = True)
+
 commenter_panel = comments_both.groupby(['author', 'ai_subreddit']).resample('D', on = 'created').agg({
     'id': 'count', # Assuming comments aren't duplicated
     'score': 'mean'})
