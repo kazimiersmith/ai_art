@@ -5,39 +5,6 @@ import pandas as pd
 from datetime import datetime
 import numpy as np
 
-# Create daily panel
-def create_daily_panel(posts, comments):
-    posts_daily = posts.groupby('ai_subreddit').resample('D', on = 'created').agg({
-        'score': 'mean',
-        'author': 'nunique',
-        'id': 'nunique'})
-    posts_daily = posts_daily.rename(columns = {'author': 'authors',
-                                                'id': 'posts',
-                                                'score': 'post_score'})
-    posts_daily = posts_daily.unstack('ai_subreddit')
-    posts_daily = posts_daily.reset_index()
-    posts_daily = posts_daily.rename(columns = {False: 'organic', True: 'ai'})
-    posts_daily.columns = ['_'.join(col).strip().lower() for col in posts_daily.columns.values]
-    posts_daily = posts_daily.rename(columns = {'created_': 'date'})
-
-    comments_daily = comments.groupby('ai_subreddit').resample('D', on = 'created').agg({
-        'score': 'mean',
-        'author': 'nunique',
-        'id': 'nunique'})
-    comments_daily = comments_daily.rename(columns = {'author': 'commenters',
-                                                      'id': 'comments',
-                                                      'score': 'comment_score'})
-    comments_daily = comments_daily.unstack('ai_subreddit')
-    comments_daily = comments_daily.reset_index()
-    comments_daily = comments_daily.rename(columns = {False: 'organic', True: 'ai'})
-    comments_daily.columns = ['_'.join(col).strip().lower() for col in comments_daily.columns.values]
-    comments_daily = comments_daily.rename(columns = {'created_': 'date'})
-
-    return pd.merge(left = posts_daily,
-                    right = comments_daily,
-                    on = 'date',
-                    how = 'inner')
-
 # Create commenter-day panel, only using commenters who ever comment
 # in both AI and organic subreddits
 posts_all = pd.read_pickle(data / 'posts.pkl')
