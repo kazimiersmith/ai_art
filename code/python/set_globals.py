@@ -1,7 +1,7 @@
 from pathlib import Path
 from datetime import datetime
 
-root = Path('~/ai_art').expanduser()
+root = Path('~/research/ai_art').expanduser()
 raw = Path('~/Dropbox/ai_art_raw').expanduser()
 data = root / 'data'
 figures = root / 'figures'
