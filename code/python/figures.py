@@ -7,11 +7,11 @@ from datetime import datetime
 
 # Start graphs after all AI art subreddits were created, and exclude the dates of the
 # Reddit API change protest. The latter dates have zero posts for some subreddits
-panel = pd.read_pickle(data / 'daily_data.pkl')
+panel = pd.read_pickle(data / 'freq_data.pkl')
 panel = panel[panel['date'] >= start_date].reset_index(drop = True)
 panel['api_protest'] = panel['date'].apply(lambda x: x in api_protest_dates)
 
-panel_both = pd.read_pickle(data / 'daily_data_both.pkl')
+panel_both = pd.read_pickle(data / 'freq_data_both.pkl')
 panel_both = panel_both[panel_both['date'] >= start_date].reset_index(drop = True)
 panel_both['api_protest'] = panel_both['date'].apply(lambda x: x in api_protest_dates)
 
@@ -232,8 +232,8 @@ plt.close()
 author_panel.groupby('date').mean(numeric_only = True).plot(y = ['posts_organic',
                                                                       'posts_ai'])
 plt.xlabel('')
-plt.ylabel('Average posts per author')
-plt.savefig(figures / 'posts_per_author.png', dpi = default_dpi)
+plt.ylabel('Average posts per author (author panel)')
+plt.savefig(figures / 'posts_per_author_author_panel.png', dpi = default_dpi)
 plt.close()
 
 author_panel.groupby('date').mean(numeric_only = True).plot(y = 'diff_posts')

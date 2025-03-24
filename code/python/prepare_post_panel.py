@@ -5,36 +5,36 @@ import pandas as pd
 from datetime import datetime
 import numpy as np
 
-# Create daily panel
-def create_daily_panel(posts, comments):
-    posts_daily = posts.groupby('ai_subreddit').resample('D', on = 'created').agg({
+# Create panel with given frequency
+def create_panel(posts, comments, freq):
+    posts_freq = posts.groupby('ai_subreddit').resample(freq, on = 'created').agg({
         'score': 'mean',
         'author': 'nunique',
         'id': 'nunique'})
-    posts_daily = posts_daily.rename(columns = {'author': 'authors',
+    posts_freq = posts_freq.rename(columns = {'author': 'authors',
                                                 'id': 'posts',
                                                 'score': 'post_score'})
-    posts_daily = posts_daily.unstack('ai_subreddit')
-    posts_daily = posts_daily.reset_index()
-    posts_daily = posts_daily.rename(columns = {False: 'organic', True: 'ai'})
-    posts_daily.columns = ['_'.join(col).strip().lower() for col in posts_daily.columns.values]
-    posts_daily = posts_daily.rename(columns = {'created_': 'date'})
+    posts_freq = posts_freq.unstack('ai_subreddit')
+    posts_freq = posts_freq.reset_index()
+    posts_freq = posts_freq.rename(columns = {False: 'organic', True: 'ai'})
+    posts_freq.columns = ['_'.join(col).strip().lower() for col in posts_freq.columns.values]
+    posts_freq = posts_freq.rename(columns = {'created_': 'date'})
 
-    comments_daily = comments.groupby('ai_subreddit').resample('D', on = 'created').agg({
+    comments_freq = comments.groupby('ai_subreddit').resample(freq, on = 'created').agg({
         'score': 'mean',
         'author': 'nunique',
         'id': 'nunique'})
-    comments_daily = comments_daily.rename(columns = {'author': 'commenters',
+    comments_freq = comments_freq.rename(columns = {'author': 'commenters',
                                                       'id': 'comments',
                                                       'score': 'comment_score'})
-    comments_daily = comments_daily.unstack('ai_subreddit')
-    comments_daily = comments_daily.reset_index()
-    comments_daily = comments_daily.rename(columns = {False: 'organic', True: 'ai'})
-    comments_daily.columns = ['_'.join(col).strip().lower() for col in comments_daily.columns.values]
-    comments_daily = comments_daily.rename(columns = {'created_': 'date'})
+    comments_freq = comments_freq.unstack('ai_subreddit')
+    comments_freq = comments_freq.reset_index()
+    comments_freq = comments_freq.rename(columns = {False: 'organic', True: 'ai'})
+    comments_freq.columns = ['_'.join(col).strip().lower() for col in comments_freq.columns.values]
+    comments_freq = comments_freq.rename(columns = {'created_': 'date'})
 
-    return pd.merge(left = posts_daily,
-                    right = comments_daily,
+    return pd.merge(left = posts_freq,
+                    right = comments_freq,
                     on = 'date',
                     how = 'inner')
 
@@ -44,25 +44,25 @@ posts_both = posts_all[posts_all['author_both'] == True].reset_index(drop = True
 comments_both = comments_all[comments_all['commenter_both'] == True].reset_index(drop = True)
 
 # Panel with all data
-daily_data = create_daily_panel(posts_all, comments_all)
-daily_data['posts_per_author_organic'] = daily_data['posts_organic'] / daily_data['authors_organic']
-daily_data['comments_per_author_organic'] = daily_data['comments_organic'] / daily_data['commenters_organic']
-daily_data['posts_per_author_ai'] = daily_data['posts_ai'] / daily_data['authors_ai']
-daily_data['comments_per_author_ai'] = daily_data['comments_ai'] / daily_data['commenters_ai']
-daily_data['comments_per_post_organic'] = daily_data['comments_organic'] / daily_data['posts_organic']
-daily_data['comments_per_post_ai'] = daily_data['comments_ai'] / daily_data['posts_ai']
-daily_data['day_of_week'] = daily_data['date'].dt.weekday
-daily_data = daily_data.replace([np.inf, -np.inf], np.nan)
-daily_data.to_pickle(data / 'daily_data.pkl')
+freq_data = create_panel(posts_all, comments_all, 'W')
+freq_data['posts_per_author_organic'] = freq_data['posts_organic'] / freq_data['authors_organic']
+freq_data['comments_per_author_organic'] = freq_data['comments_organic'] / freq_data['commenters_organic']
+freq_data['posts_per_author_ai'] = freq_data['posts_ai'] / freq_data['authors_ai']
+freq_data['comments_per_author_ai'] = freq_data['comments_ai'] / freq_data['commenters_ai']
+freq_data['comments_per_post_organic'] = freq_data['comments_organic'] / freq_data['posts_organic']
+freq_data['comments_per_post_ai'] = freq_data['comments_ai'] / freq_data['posts_ai']
+freq_data['day_of_week'] = freq_data['date'].dt.weekday
+freq_data = freq_data.replace([np.inf, -np.inf], np.nan)
+freq_data.to_pickle(data / 'freq_data.pkl')
 
 # Panel with only authors/commenters in both AI subreddits and r/Art
-daily_data_both = create_daily_panel(posts_both, comments_both)
-daily_data_both['posts_per_author_organic'] = daily_data_both['posts_organic'] / daily_data_both['authors_organic']
-daily_data_both['comments_per_author_organic'] = daily_data_both['comments_organic'] / daily_data_both['commenters_organic']
-daily_data_both['posts_per_author_ai'] = daily_data_both['posts_ai'] / daily_data_both['authors_ai']
-daily_data_both['comments_per_author_ai'] = daily_data_both['comments_ai'] / daily_data_both['commenters_ai']
-daily_data_both['comments_per_post_organic'] = daily_data_both['comments_organic'] / daily_data_both['posts_organic']
-daily_data_both['comments_per_post_ai'] = daily_data_both['comments_ai'] / daily_data_both['posts_ai']
-daily_data_both['day_of_week'] = daily_data_both['date'].dt.weekday
-daily_data_both = daily_data_both.replace([np.inf, -np.inf], np.nan)
-daily_data_both.to_pickle(data / 'daily_data_both.pkl')
+freq_data_both = create_panel(posts_both, comments_both, 'W')
+freq_data_both['posts_per_author_organic'] = freq_data_both['posts_organic'] / freq_data_both['authors_organic']
+freq_data_both['comments_per_author_organic'] = freq_data_both['comments_organic'] / freq_data_both['commenters_organic']
+freq_data_both['posts_per_author_ai'] = freq_data_both['posts_ai'] / freq_data_both['authors_ai']
+freq_data_both['comments_per_author_ai'] = freq_data_both['comments_ai'] / freq_data_both['commenters_ai']
+freq_data_both['comments_per_post_organic'] = freq_data_both['comments_organic'] / freq_data_both['posts_organic']
+freq_data_both['comments_per_post_ai'] = freq_data_both['comments_ai'] / freq_data_both['posts_ai']
+freq_data_both['day_of_week'] = freq_data_both['date'].dt.weekday
+freq_data_both = freq_data_both.replace([np.inf, -np.inf], np.nan)
+freq_data_both.to_pickle(data / 'freq_data_both.pkl')
