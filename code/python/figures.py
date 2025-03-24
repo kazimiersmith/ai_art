@@ -256,3 +256,16 @@ plt.ylabel('Average future posts')
 plt.savefig(figures / 'future_posts.png', dpi = default_dpi)
 plt.close()
 
+author_panel.groupby('date').sum().plot(y = 'adopted_ai')
+plt.xlabel('')
+plt.ylabel('# AI adopters among human artists')
+plt.savefig(figures / 'ai_adopters.png', dpi = default_dpi)
+plt.close()
+
+author_panel.groupby('date').sum().plot(y = ['first_post_organic',
+                                             'first_post_ai'])
+plt.xlabel('')
+plt.ylabel('Number of first-time authors')
+plt.savefig(figures / 'authors_first_post.png', dpi = default_dpi)
+plt.close()
+

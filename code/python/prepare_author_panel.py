@@ -34,6 +34,8 @@ author_panel = pd.merge(left = authors_dates,
 author_panel = author_panel.fillna({'posts_organic': 0,
                                           'posts_ai': 0})
 
+author_panel = author_panel.sort_values(by = ['author', 'date'])
+
 author_panel['cum_posts_ai'] = author_panel.groupby('author')['posts_ai'].cumsum()
 author_panel['cum_posts_organic'] = author_panel.groupby('author')['posts_organic'].cumsum()
 author_panel['has_posted_ai'] = author_panel['cum_posts_ai'] > 0
@@ -46,6 +48,16 @@ author_panel['future_posts_ai'] = author_panel.groupby('author')['posts_ai'].tra
 author_panel['future_posts_organic'] = author_panel.groupby('author')['posts_organic'].transform(lambda x: x[::-1].cumsum()[::-1])
 author_panel['has_future_posts_ai'] = author_panel['future_posts_ai'] > 0
 author_panel['has_future_posts_organic'] = author_panel['future_posts_organic'] > 0
+
+# Whether the author starts posting on AI art subreddits this period
+# after having posted on r/Art in the past
+author_panel['has_posted_ai_prev'] = author_panel['has_posted_ai'].shift(1)
+author_panel['has_posted_organic_prev'] = author_panel['has_posted_organic'].shift(1)
+
+author_panel['first_post_ai'] = (author_panel['has_posted_ai'] == True) & (author_panel['has_posted_ai_prev'] == False)
+author_panel['first_post_organic'] = (author_panel['has_posted_organic'] == True) & (author_panel['has_posted_organic_prev'] == False)
+
+author_panel['adopted_ai'] = (author_panel['first_post_ai'] == True) & (author_panel['has_posted_organic'] == True)
 
 author_panel.to_pickle(data / 'author_panel.pkl')
 
