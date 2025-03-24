@@ -15,7 +15,7 @@ comments_both = comments_both[comments_both['author'] != '[deleted]'].reset_inde
 # TODO remove
 comments_both = comments_both.sample(frac = 0.01).reset_index(drop = True)
 
-commenter_panel = comments_both.groupby(['author', 'ai_subreddit']).resample('D', on = 'created').agg({
+commenter_panel = comments_both.groupby(['author', 'ai_subreddit']).resample('W', on = 'created').agg({
     'id': 'count', # Assuming comments aren't duplicated
     'score': 'mean'})
 
@@ -28,7 +28,7 @@ commenter_panel = commenter_panel.rename(columns = {'created_': 'date',
                                                     'author_': 'author'})
 
 max_date = commenter_panel['date'].max()
-all_dates = pd.DataFrame({'date': pd.date_range(start_date, max_date, freq = 'D')})
+all_dates = pd.DataFrame({'date': pd.date_range(start_date, max_date, freq = 'W')})
 all_commenters = pd.DataFrame({'author': comments_both['author'].unique()})
 commenters_dates = pd.merge(all_dates, all_commenters, how = 'cross')
 commenter_panel = pd.merge(left = commenters_dates,
