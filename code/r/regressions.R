@@ -2,7 +2,7 @@ library(stargazer)
 library(reticulate)
 library(data.table)
 
-root <- '~/Dropbox/ai_art'
+root <- '~/research/ai_art'
 data <- paste0(root, '/data')
 tab <- paste0(root, '/tab')
 

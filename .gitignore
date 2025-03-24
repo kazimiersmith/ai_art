@@ -13,3 +13,5 @@ tab/*
 code/python/__pycache__
 code/python/logs
 
+*.Rprofile
+code/r/renv
