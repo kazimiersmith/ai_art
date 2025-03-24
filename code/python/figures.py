@@ -16,6 +16,7 @@ panel_both = panel_both[panel_both['date'] >= start_date].reset_index(drop = Tru
 panel_both['api_protest'] = panel_both['date'].apply(lambda x: x in api_protest_dates)
 
 commenter_panel = pd.read_pickle(data / 'commenter_panel.pkl')
+author_panel = pd.read_pickle(data / 'author_panel.pkl')
 
 # Graph daily submissions to r/Art and AI art subreddits
 panel.plot(x = 'date', y = ['posts_organic', 'posts_ai'])
@@ -218,5 +219,40 @@ commenter_panel.groupby('date').mean(numeric_only = True).plot(y = ['future_comm
 plt.xlabel('')
 plt.ylabel('Average future comments')
 plt.savefig(figures / 'future_comments.png', dpi = default_dpi)
+plt.close()
+
+# Plot number of authors who have ever posted on AI and organic subreddits
+author_panel.groupby('date').sum().plot(y = ['has_posted_organic',
+                                                 'has_posted_ai'])
+plt.xlabel('')
+plt.ylabel('Number of authors')
+plt.savefig(figures / 'authors_ever_posted.png', dpi = default_dpi)
+plt.close()
+
+author_panel.groupby('date').mean(numeric_only = True).plot(y = ['posts_organic',
+                                                                      'posts_ai'])
+plt.xlabel('')
+plt.ylabel('Average posts per author')
+plt.savefig(figures / 'posts_per_author.png', dpi = default_dpi)
+plt.close()
+
+author_panel.groupby('date').mean(numeric_only = True).plot(y = 'diff_posts')
+plt.xlabel('')
+plt.ylabel('Average difference in posts')
+plt.savefig(figures / 'posts_diff.png', dpi = default_dpi)
+plt.close()
+
+author_panel.groupby('date').sum().plot(y = ['has_future_posts_organic',
+                                                'has_future_posts_ai'])
+plt.xlabel('')
+plt.ylabel('Number of authors')
+plt.savefig(figures / 'authors_future_posts.png', dpi = default_dpi)
+plt.close()
+
+author_panel.groupby('date').mean(numeric_only = True).plot(y = ['future_posts_organic',
+                                                                    'future_posts_ai'])
+plt.xlabel('')
+plt.ylabel('Average future posts')
+plt.savefig(figures / 'future_posts.png', dpi = default_dpi)
 plt.close()
 
