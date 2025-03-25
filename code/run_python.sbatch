@@ -12,7 +12,7 @@ source /scratch/kas1112/.virtualenvs/py_ai_art/bin/activate
 export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK;
 python python/prepare_data.py
 python python/prepare_post_panel.py
-python python/prepare_commenter_panel.py
 python python/prepare_author_panel.py
+python python/prepare_commenter_panel.py
 python python/figures.py
 
