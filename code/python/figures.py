@@ -11,9 +11,17 @@ panel = pd.read_pickle(data / 'freq_data.pkl')
 panel = panel[panel['date'] >= start_date].reset_index(drop = True)
 panel['api_protest'] = panel['date'].apply(lambda x: x in api_protest_dates)
 
+post_panel_indiv = pd.read_pickle(data / 'freq_data_indiv.pkl')
+post_panel_indiv = post_panel_indiv[post_panel_indiv['date'] >= start_date].reset_index(drop = True)
+post_panel_indiv['api_protest'] = post_panel_indiv['date'].apply(lambda x: x in api_protest_dates)
+
 panel_both = pd.read_pickle(data / 'freq_data_both.pkl')
 panel_both = panel_both[panel_both['date'] >= start_date].reset_index(drop = True)
 panel_both['api_protest'] = panel_both['date'].apply(lambda x: x in api_protest_dates)
+
+post_panel_both_indiv = pd.read_pickle(data / 'freq_data_both_indiv.pkl')
+post_panel_both_indiv = post_panel_both_indiv[post_panel_both_indiv['date'] >= start_date].reset_index(drop = True)
+post_panel_both_indiv['api_protest'] = post_panel_both_indiv['date'].apply(lambda x: x in api_protest_dates)
 
 commenter_panel = pd.read_pickle(data / 'commenter_panel.pkl')
 author_panel = pd.read_pickle(data / 'author_panel.pkl')
@@ -33,6 +41,19 @@ plt.ylabel('Daily posts per author')
 plt.legend(['Organic', 'AI'])
 plt.savefig(figures / 'posts_per_author.png', dpi = default_dpi)
 plt.close()
+
+# Same graph, broken down by individual subreddit
+post_panel_indiv[post_panel_indiv['date'] >= all_subreddits_exist].plot(x = 'date', y = ['posts_per_author_art',
+                                                                                         'posts_per_author_aiart',
+                                                                                         'posts_per_author_midjourney',
+                                                                                         'posts_per_author_stablediffusion',
+                                                                                         'posts_per_author_dalle2'])
+plt.xlabel('')
+plt.ylabel('Daily posts per author')
+plt.legend(['r/Art', 'r/aiArt', 'r/midjourney', 'r/StableDiffusion', 'r/dalle2'])
+plt.savefig(figures / 'posts_per_author_indiv.png', dpi = default_dpi)
+plt.close()
+
 
 # Graph unique authors to r/Art and AI art subreddits
 panel.plot(x = 'date', y = ['authors_organic', 'authors_ai'])
