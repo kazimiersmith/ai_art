@@ -29,7 +29,7 @@ author_panel = pd.read_pickle(data / 'author_panel.pkl')
 # Graph daily submissions to r/Art and AI art subreddits
 panel.plot(x = 'date', y = ['posts_organic', 'posts_ai'])
 plt.xlabel('')
-plt.ylabel('Daily posts')
+plt.ylabel('Weekly posts')
 plt.legend(['Organic', 'AI'])
 plt.savefig(figures / 'posts.png', dpi = default_dpi)
 plt.close()
@@ -37,7 +37,7 @@ plt.close()
 # Graph daily posts per author to r/Art and AI art subreddits
 panel[panel['date'] >= all_subreddits_exist].plot(x = 'date', y = ['posts_per_author_organic', 'posts_per_author_ai'])
 plt.xlabel('')
-plt.ylabel('Daily posts per author')
+plt.ylabel('Weekly posts per author')
 plt.legend(['Organic', 'AI'])
 plt.savefig(figures / 'posts_per_author.png', dpi = default_dpi)
 plt.close()
@@ -49,7 +49,7 @@ post_panel_indiv[post_panel_indiv['date'] >= all_subreddits_exist].plot(x = 'dat
                                                                                          'posts_per_author_stablediffusion',
                                                                                          'posts_per_author_dalle2'])
 plt.xlabel('')
-plt.ylabel('Daily posts per author')
+plt.ylabel('Weekly posts per author')
 plt.legend(['r/Art', 'r/aiArt', 'r/midjourney', 'r/StableDiffusion', 'r/dalle2'])
 plt.savefig(figures / 'posts_per_author_indiv.png', dpi = default_dpi)
 plt.close()
@@ -58,7 +58,7 @@ plt.close()
 # Graph unique authors to r/Art and AI art subreddits
 panel.plot(x = 'date', y = ['authors_organic', 'authors_ai'])
 plt.xlabel('')
-plt.ylabel('Daily unique post authors')
+plt.ylabel('Weekly unique post authors')
 plt.legend(['Organic', 'AI'])
 plt.savefig(figures / 'unique_authors.png', dpi = default_dpi)
 plt.close()
@@ -73,7 +73,7 @@ plt.close()
 # Graph daily comments on r/Art and AI art subreddits
 panel.plot(x = 'date', y = ['comments_organic', 'comments_ai'])
 plt.xlabel('')
-plt.ylabel('Daily comments')
+plt.ylabel('Weekly comments')
 plt.legend(['Organic', 'AI'])
 plt.savefig(figures / 'comments.png', dpi = default_dpi)
 plt.close()
@@ -81,48 +81,48 @@ plt.close()
 # Graph unique commenters to r/Art and AI art subreddits
 panel.plot(x = 'date', y = ['commenters_organic', 'commenters_ai'])
 plt.xlabel('')
-plt.ylabel('Daily unique commenters')
+plt.ylabel('Weekly unique commenters')
 plt.savefig(figures / 'unique_commenters.png', dpi = default_dpi)
 plt.close()
 
 # Graph daily comments per author
 panel.plot(x = 'date', y = ['comments_per_author_organic', 'comments_per_author_ai'])
 plt.xlabel('')
-plt.ylabel('Daily comments per author')
+plt.ylabel('Weekly comments per author')
 plt.savefig(figures / 'comments_per_author.png', dpi = default_dpi)
 plt.close()
 
 # Graph daily comments per post
 panel.plot(x = 'date', y = ['comments_per_post_organic', 'comments_per_post_ai'])
 plt.xlabel('')
-plt.ylabel('Daily comments per post')
+plt.ylabel('Weekly comments per post')
 plt.savefig(figures / 'comments_per_post.png', dpi = default_dpi)
 
 # Graph daily submissions to r/Art and AI art subreddits by authors who ever post on both
 panel_both.plot(x = 'date', y = ['posts_organic', 'posts_ai'])
 plt.xlabel('')
-plt.ylabel('Daily submissions')
+plt.ylabel('Weekly submissions')
 plt.savefig(figures / 'submissions_overlapping_authors.png', dpi = default_dpi)
 plt.close()
 
 # Graph unique authors to r/Art and AI art subreddits, among authors who ever post on both
 panel_both.plot(x = 'date', y = ['authors_organic', 'authors_ai'])
 plt.xlabel('')
-plt.ylabel('Daily unique post authors')
+plt.ylabel('Weekly unique post authors')
 plt.savefig(figures / 'unique_authors_overlapping_authors.png', dpi = default_dpi)
 plt.close()
 
 # Graph daily comments on r/Art and AI art subreddits by commenters who ever comment on both
 panel_both.plot(x = 'date', y = ['comments_organic', 'comments_ai'])
 plt.xlabel('')
-plt.ylabel('Daily comments')
+plt.ylabel('Weekly comments')
 plt.savefig(figures / 'comments_overlapping_commenters.png', dpi = default_dpi)
 plt.close()
 
 # Graph unique commenters to r/Art and AI art subreddits, among commenters who ever comment on both
 panel_both.plot(x = 'date', y = ['commenters_organic', 'commenters_ai'])
 plt.xlabel('')
-plt.ylabel('Daily unique commenters')
+plt.ylabel('Weekly unique commenters')
 plt.savefig(figures / 'unique_commenters_overlapping_commenters.png', dpi = default_dpi)
 plt.close()
 
