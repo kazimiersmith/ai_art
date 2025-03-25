@@ -51,13 +51,14 @@ author_panel['has_future_posts_organic'] = author_panel['future_posts_organic'] 
 
 # Whether the author starts posting on AI art subreddits this period
 # after having posted on r/Art in the past
-author_panel['has_posted_ai_prev'] = author_panel['has_posted_ai'].shift(1)
-author_panel['has_posted_organic_prev'] = author_panel['has_posted_organic'].shift(1)
+author_panel['cum_posts_ai_prev'] = author_panel.groupby('author')['cum_posts_ai'].shift(1)
+author_panel['cum_posts_organic_prev'] = author_panel.groupby('author')['cum_posts_organic'].shift(1)
 
-author_panel['first_post_ai'] = (author_panel['has_posted_ai'] == True) & (author_panel['has_posted_ai_prev'] == False)
-author_panel['first_post_organic'] = (author_panel['has_posted_organic'] == True) & (author_panel['has_posted_organic_prev'] == False)
+author_panel['first_post_ai'] = (author_panel['cum_posts_ai'] > 0) & (author_panel['cum_posts_ai_prev'] == 0)
+author_panel['first_post_organic'] = (author_panel['cum_posts_organic'] > 0) & (author_panel['cum_posts_organic_prev'] == 0)
 
-author_panel['adopted_ai'] = (author_panel['first_post_ai'] == True) & (author_panel['has_posted_organic'] == True)
+author_panel['adopted_ai'] = (author_panel['first_post_ai'] == True) & (author_panel['cum_posts_organic'] > 0)
+author_panel['adopted_organic'] = (author_panel['first_post_organic'] == True) & (author_panel['cum_posts_ai'] > 0)
 
 author_panel.to_pickle(data / 'author_panel.pkl')
 

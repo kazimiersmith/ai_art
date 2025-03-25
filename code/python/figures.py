@@ -287,6 +287,7 @@ author_panel.groupby('date').sum().plot(y = ['first_post_organic',
                                              'first_post_ai'])
 plt.xlabel('')
 plt.ylabel('Number of first-time authors')
+plt.legend(['Organic', 'AI'])
 plt.savefig(figures / 'authors_first_post.png', dpi = default_dpi)
 plt.close()
 
